@@ -23,12 +23,17 @@ services:
       interval: 1s
       timeout: 20s
       retries: 20
+    environment:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_SESSION_TOKEN
+      - AWS_SECURITY_TOKEN
     ports:
       - "8182:8182"
     depends_on:
       dynamodb-local:
         condition: service_healthy
-    command: ["/var/jg/bin/gremlin-server.sh", "./conf/gremlin-server/gremlin-server-local-docker.yaml"]
+    command: ["/var/jg/bin/gremlin-server.sh", "./conf/gremlin-server/gremlin-server-local-docker-remote-dynamo.yaml"]
   dynamodb-local:
     image: awslabs/dynamodblocal:latest
     container_name: dynamodb_local
